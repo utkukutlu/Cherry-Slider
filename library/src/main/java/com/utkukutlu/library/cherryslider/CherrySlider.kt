@@ -34,7 +34,7 @@ class CherrySlider @JvmOverloads constructor(context: Context, attrs: AttributeS
     private var slideTimer: Timer? = null
 
     init {
-        LayoutInflater.from(getContext()).inflate(R.layout.layout_slider, this, true)
+        LayoutInflater.from(getContext()).inflate(R.layout.layout_cherry_slider, this, true)
         viewPager = findViewById(R.id.view_pager)
         pagerDots = findViewById(R.id.pager_dots)
 

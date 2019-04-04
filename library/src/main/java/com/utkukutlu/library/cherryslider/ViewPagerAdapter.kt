@@ -30,7 +30,7 @@ class ViewPagerAdapter(context: Context?, imageList: List<CherrySliderModel>) : 
 
     override fun instantiateItem(container: ViewGroup, position: Int): View {
 
-        val itemView = layoutInflater!!.inflate(R.layout.item_slider, container, false)
+        val itemView = layoutInflater!!.inflate(R.layout.item_cherry_slider, container, false)
 
         val imageView = itemView.findViewById<ImageView>(R.id.image_view)
         val linearLayout = itemView.findViewById<LinearLayout>(R.id.linear_layout)
