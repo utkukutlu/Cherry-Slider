@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CherrySlider">
+        <attr name="auto_slide" format="boolean"/>
+        <attr name="period" format="integer"/>
+        <attr name="duration" format="integer"/>
+        <attr name="selected_dot" format="reference"/>
+        <attr name="unselected_dot" format="reference"/>
+    </declare-styleable>
+</resources>
