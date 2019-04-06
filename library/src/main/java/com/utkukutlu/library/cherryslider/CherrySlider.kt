@@ -24,9 +24,17 @@ class CherrySlider @JvmOverloads constructor(context: Context, attrs: AttributeS
     private var currentPage = 0
     private var imageCount = 0
 
-    private var period: Long = 0
-    var duration: Long = 0
-    private var autoSlide = false
+    private var period: Int = 0
+    var duration: Int = 0
+    var autoSlide = false
+        set(value) {
+            if (value) {
+                slide()
+            } else {
+                slideTimer?.cancel()
+            }
+            field = value
+        }
 
     private var selectedDot = 0
     private var unselectedDot = 0
@@ -41,8 +49,12 @@ class CherrySlider @JvmOverloads constructor(context: Context, attrs: AttributeS
         val typedArray =
             context.theme.obtainStyledAttributes(attrs, R.styleable.CherrySlider, defStyleAttr, defStyleAttr)
 
-        period = typedArray.getInt(R.styleable.CherrySlider_period, 1000).toLong()
-        duration = typedArray.getInt(R.styleable.CherrySlider_duration, 1000).toLong()
+        period = typedArray.getInt(R.styleable.CherrySlider_period, -1)
+
+        if (duration != 0) {
+            duration = typedArray.getInt(R.styleable.CherrySlider_duration, -1)
+        }
+
         autoSlide = typedArray.getBoolean(R.styleable.CherrySlider_auto_slide, false)
         selectedDot =
             typedArray.getResourceId(R.styleable.CherrySlider_selected_dot, R.drawable.shape_default_selected_dot)
@@ -52,6 +64,7 @@ class CherrySlider @JvmOverloads constructor(context: Context, attrs: AttributeS
     }
 
     fun setImages(imageList: List<CherrySliderModel>) {
+        slideTimer?.cancel()
         viewPagerAdapter = ViewPagerAdapter(context, imageList)
         viewPager?.adapter = viewPagerAdapter
         imageCount = imageList.size
@@ -93,15 +106,6 @@ class CherrySlider @JvmOverloads constructor(context: Context, attrs: AttributeS
         })
     }
 
-    fun autoSlide(autoSlide: Boolean) {
-        this.autoSlide = autoSlide
-        if (autoSlide) {
-            slide()
-        } else {
-            slideTimer?.cancel()
-        }
-    }
-
     private fun slide() {
         val handler = Handler()
         val update = Runnable {
@@ -115,7 +119,7 @@ class CherrySlider @JvmOverloads constructor(context: Context, attrs: AttributeS
             override fun run() {
                 handler.post(update)
             }
-        }, duration, period)
+        }, duration.toLong(), period.toLong())
     }
 
     fun setItemClickListener(itemClickListener: ItemClickListener) {

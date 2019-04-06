@@ -36,22 +36,22 @@ class ViewPagerAdapter(context: Context?, imageList: List<CherrySliderModel>) : 
         val linearLayout = itemView.findViewById<LinearLayout>(R.id.linear_layout)
         val textView = itemView.findViewById<TextView>(R.id.text_view)
 
-        if (imageList!![position].title != null) {
+        if (imageList?.get(position)?.title != null) {
             linearLayout.visibility = View.VISIBLE
-            textView.text = imageList!![position].title
+            textView.text = imageList?.get(position)?.title
         } else {
             linearLayout.visibility = View.INVISIBLE
         }
 
-        if (imageList!![position].imageUrl == null) {
+        if (imageList?.get(position)?.imageUrl == null) {
             Glide.with(imageView.context)
-                .load(imageList!![position].imagePath)
-                .apply(RequestOptions.fitCenterTransform())
+                .load(imageList?.get(position)?.imagePath)
+                .apply(RequestOptions.centerCropTransform().centerCrop())
                 .into(imageView)
         } else {
             Glide.with(imageView.context)
-                .load(imageList!![position].imageUrl)
-                .apply(RequestOptions.fitCenterTransform())
+                .load(imageList?.get(position)?.imageUrl)
+                .apply(RequestOptions.centerCropTransform().centerCrop())
                 .into(imageView)
         }
 
