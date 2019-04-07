@@ -25,7 +25,7 @@ class CherrySlider @JvmOverloads constructor(context: Context, attrs: AttributeS
     private var imageCount = 0
 
     private var period: Int = 0
-    var duration: Int = 0
+    private var duration: Int = 0
     var autoSlide = false
         set(value) {
             if (value) {
@@ -49,11 +49,9 @@ class CherrySlider @JvmOverloads constructor(context: Context, attrs: AttributeS
         val typedArray =
             context.theme.obtainStyledAttributes(attrs, R.styleable.CherrySlider, defStyleAttr, defStyleAttr)
 
-        period = typedArray.getInt(R.styleable.CherrySlider_period, -1)
+        period = typedArray.getInt(R.styleable.CherrySlider_period, 0)
 
-        if (duration != 0) {
-            duration = typedArray.getInt(R.styleable.CherrySlider_duration, -1)
-        }
+        duration = typedArray.getInt(R.styleable.CherrySlider_duration, 1000)
 
         autoSlide = typedArray.getBoolean(R.styleable.CherrySlider_auto_slide, false)
         selectedDot =
@@ -95,7 +93,7 @@ class CherrySlider @JvmOverloads constructor(context: Context, attrs: AttributeS
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
 
             override fun onPageSelected(position: Int) {
-                currentPage = position
+//                currentPage = position
                 for (dot in dots ?: arrayListOf()) {
                     dot.setImageDrawable(ContextCompat.getDrawable(context, unselectedDot))
                 }
@@ -107,19 +105,21 @@ class CherrySlider @JvmOverloads constructor(context: Context, attrs: AttributeS
     }
 
     private fun slide() {
-        val handler = Handler()
-        val update = Runnable {
-            if (currentPage == imageCount) {
-                currentPage = 0
+        if (imageCount > 0) {
+            val handler = Handler()
+            val update = Runnable {
+                if (currentPage == imageCount) {
+                    currentPage = 0
+                }
+                viewPager?.setCurrentItem(currentPage++, true)
             }
-            viewPager?.setCurrentItem(currentPage++, true)
+            slideTimer = Timer()
+            slideTimer?.scheduleAtFixedRate(object : TimerTask() {
+                override fun run() {
+                    handler.post(update)
+                }
+            }, 0, 5000)
         }
-        slideTimer = Timer()
-        slideTimer?.schedule(object : TimerTask() {
-            override fun run() {
-                handler.post(update)
-            }
-        }, duration.toLong(), period.toLong())
     }
 
     fun setItemClickListener(itemClickListener: ItemClickListener) {
