@@ -73,7 +73,7 @@ class CherrySlider @JvmOverloads constructor(context: Context, attrs: AttributeS
     }
 
     private fun setDots(size: Int) {
-
+        pagerDots?.removeAllViews()
         dots = arrayListOf()
 
         for (i in 0 until size) {
