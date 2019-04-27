@@ -46,12 +46,12 @@ class ViewPagerAdapter(context: Context?, imageList: List<CherrySliderModel>) : 
         if (imageList?.get(position)?.imageUrl == null) {
             Glide.with(imageView.context)
                 .load(imageList?.get(position)?.imagePath)
-                .apply(RequestOptions.centerCropTransform().centerCrop())
+                .apply(RequestOptions.fitCenterTransform().fitCenter())
                 .into(imageView)
         } else {
             Glide.with(imageView.context)
                 .load(imageList?.get(position)?.imageUrl)
-                .apply(RequestOptions.centerCropTransform().centerCrop())
+                .apply(RequestOptions.fitCenterTransform().fitCenter())
                 .into(imageView)
         }
 
