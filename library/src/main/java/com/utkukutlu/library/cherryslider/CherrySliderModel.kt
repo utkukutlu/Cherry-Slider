@@ -1,27 +1,10 @@
 package com.utkukutlu.library.cherryslider
 
-class CherrySliderModel {
+import com.bumptech.glide.request.RequestOptions
 
-    var imageUrl: String? = null
-    var imagePath: Int? = 0
-    var title: String? = null
-
-    constructor (imageUrl: String) {
-        this.imageUrl = imageUrl
-    }
-
-    constructor (imagePath: Int) {
-        this.imagePath = imagePath
-    }
-
-    constructor (imageUrl: String, title: String?) {
-        this.imageUrl = imageUrl
-        this.title = title
-    }
-
-    constructor (imagePath: Int, title: String?) {
-        this.imagePath = imagePath
-        this.title = title
-    }
-
-}
+data class CherrySliderModel(
+    var imageUrl: String? = null,
+    var imagePath: Int? = null,
+    var title: String? = null,
+    var opts: RequestOptions? = null
+)

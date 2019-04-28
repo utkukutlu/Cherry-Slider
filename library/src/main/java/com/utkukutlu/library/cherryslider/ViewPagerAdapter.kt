@@ -10,7 +10,6 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 
 class ViewPagerAdapter(context: Context?, imageList: List<CherrySliderModel>) : PagerAdapter() {
 
@@ -44,15 +43,17 @@ class ViewPagerAdapter(context: Context?, imageList: List<CherrySliderModel>) : 
         }
 
         if (imageList?.get(position)?.imageUrl == null) {
-            Glide.with(imageView.context)
-                .load(imageList?.get(position)?.imagePath)
-                .apply(RequestOptions.fitCenterTransform().fitCenter())
-                .into(imageView)
+            val img = Glide.with(imageView.context).load(imageList?.get(position)?.imagePath)
+            imageList?.get(position)?.opts?.let {
+                img.apply(it)
+            }
+            img.into(imageView)
         } else {
-            Glide.with(imageView.context)
-                .load(imageList?.get(position)?.imageUrl)
-                .apply(RequestOptions.fitCenterTransform().fitCenter())
-                .into(imageView)
+            val img = Glide.with(imageView.context).load(imageList?.get(position)?.imageUrl)
+            imageList?.get(position)?.opts?.let {
+                img.apply(it)
+            }
+            img.into(imageView)
         }
 
         container.addView(itemView)
