@@ -2,6 +2,7 @@
 <resources>
     <declare-styleable name="CherrySlider">
         <attr name="auto_slide" format="boolean"/>
+        <attr name="indicator" format="boolean"/>
         <attr name="period" format="integer"/>
         <attr name="duration" format="integer"/>
         <attr name="selected_dot" format="reference"/>

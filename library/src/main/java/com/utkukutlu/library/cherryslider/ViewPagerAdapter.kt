@@ -15,7 +15,7 @@ class ViewPagerAdapter(context: Context?, imageList: List<CherrySliderModel>) : 
 
     private var imageList: List<CherrySliderModel>? = imageList
     private var layoutInflater: LayoutInflater? =
-        context!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater?
+        context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater?
 
     private var itemClickListener: ItemClickListener? = null
 

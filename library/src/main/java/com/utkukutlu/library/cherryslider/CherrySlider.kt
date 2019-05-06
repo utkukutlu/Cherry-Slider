@@ -6,6 +6,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
@@ -39,6 +40,8 @@ class CherrySlider @JvmOverloads constructor(context: Context, attrs: AttributeS
     private var selectedDot = 0
     private var unselectedDot = 0
 
+    private var showIndicator = true
+
     private var slideTimer: Timer? = null
 
     init {
@@ -59,6 +62,8 @@ class CherrySlider @JvmOverloads constructor(context: Context, attrs: AttributeS
         unselectedDot =
             typedArray.getResourceId(R.styleable.CherrySlider_unselected_dot, R.drawable.shape_default_unselected_dot)
 
+        showIndicator = typedArray.getBoolean(R.styleable.CherrySlider_indicator, true)
+
     }
 
     fun setImages(imageList: List<CherrySliderModel>) {
@@ -73,6 +78,12 @@ class CherrySlider @JvmOverloads constructor(context: Context, attrs: AttributeS
     }
 
     private fun setDots(size: Int) {
+        if (showIndicator) {
+            pagerDots?.visibility = View.VISIBLE
+        } else {
+            pagerDots?.visibility = View.INVISIBLE
+        }
+
         pagerDots?.removeAllViews()
         dots = arrayListOf()
 
