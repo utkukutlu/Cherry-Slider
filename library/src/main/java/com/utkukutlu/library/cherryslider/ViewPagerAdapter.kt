@@ -10,6 +10,10 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.utkukutlu.library.cherryslider.CherrySlider.Scale.Companion.CENTER_CROP
+import com.utkukutlu.library.cherryslider.CherrySlider.Scale.Companion.CENTER_INSIDE
+import com.utkukutlu.library.cherryslider.CherrySlider.Scale.Companion.FIT_CENTER
 
 class ViewPagerAdapter(context: Context?, imageList: List<CherrySliderModel>) : PagerAdapter() {
 
@@ -44,14 +48,14 @@ class ViewPagerAdapter(context: Context?, imageList: List<CherrySliderModel>) : 
 
         if (imageList?.get(position)?.imageUrl == null) {
             val img = Glide.with(imageView.context).load(imageList?.get(position)?.imagePath)
-            imageList?.get(position)?.opts?.let {
-                img.apply(it)
+            imageList?.get(position)?.scale?.let {
+                img.apply(getScale(it))
             }
             img.into(imageView)
         } else {
             val img = Glide.with(imageView.context).load(imageList?.get(position)?.imageUrl)
-            imageList?.get(position)?.opts?.let {
-                img.apply(it)
+            imageList?.get(position)?.scale?.let {
+                img.apply(getScale(it))
             }
             img.into(imageView)
         }
@@ -63,12 +67,21 @@ class ViewPagerAdapter(context: Context?, imageList: List<CherrySliderModel>) : 
         return itemView
     }
 
-    fun setItemClickListener(itemClickListener: ItemClickListener) {
-        this.itemClickListener = itemClickListener
-    }
-
     override fun destroyItem(container: ViewGroup, position: Int, obj: Any) {
         container.removeView(obj as RelativeLayout)
     }
 
+
+    fun setItemClickListener(itemClickListener: ItemClickListener) {
+        this.itemClickListener = itemClickListener
+    }
+
+    private fun getScale(scale: CherrySlider.Scale): RequestOptions {
+        return when {
+            scale.toString() == FIT_CENTER -> RequestOptions.fitCenterTransform()
+            scale.toString() == CENTER_CROP -> RequestOptions.centerCropTransform()
+            scale.toString() == CENTER_INSIDE -> RequestOptions.centerInsideTransform()
+            else -> RequestOptions.centerInsideTransform()
+        }
+    }
 }

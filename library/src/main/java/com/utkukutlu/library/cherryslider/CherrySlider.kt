@@ -2,6 +2,7 @@ package com.utkukutlu.library.cherryslider
 
 import android.content.Context
 import android.os.Handler
+import android.support.annotation.StringDef
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
 import android.util.AttributeSet
@@ -10,9 +11,16 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
+import com.utkukutlu.library.cherryslider.CherrySlider.Scale.Companion.CENTER_CROP
+import com.utkukutlu.library.cherryslider.CherrySlider.Scale.Companion.CENTER_INSIDE
+import com.utkukutlu.library.cherryslider.CherrySlider.Scale.Companion.FIT_CENTER
 import java.util.*
 
-class CherrySlider @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
+class CherrySlider @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) :
     RelativeLayout(context, attrs, defStyleAttr) {
 
     private var viewPager: ViewPager? = null
@@ -50,7 +58,12 @@ class CherrySlider @JvmOverloads constructor(context: Context, attrs: AttributeS
         pagerDots = findViewById(R.id.pager_dots)
 
         val typedArray =
-            context.theme.obtainStyledAttributes(attrs, R.styleable.CherrySlider, defStyleAttr, defStyleAttr)
+            context.theme.obtainStyledAttributes(
+                attrs,
+                R.styleable.CherrySlider,
+                defStyleAttr,
+                defStyleAttr
+            )
 
         period = typedArray.getInt(R.styleable.CherrySlider_period, 0)
 
@@ -58,9 +71,15 @@ class CherrySlider @JvmOverloads constructor(context: Context, attrs: AttributeS
 
         autoSlide = typedArray.getBoolean(R.styleable.CherrySlider_auto_slide, false)
         selectedDot =
-            typedArray.getResourceId(R.styleable.CherrySlider_selected_dot, R.drawable.shape_default_selected_dot)
+            typedArray.getResourceId(
+                R.styleable.CherrySlider_selected_dot,
+                R.drawable.shape_default_selected_dot
+            )
         unselectedDot =
-            typedArray.getResourceId(R.styleable.CherrySlider_unselected_dot, R.drawable.shape_default_unselected_dot)
+            typedArray.getResourceId(
+                R.styleable.CherrySlider_unselected_dot,
+                R.drawable.shape_default_unselected_dot
+            )
 
         showIndicator = typedArray.getBoolean(R.styleable.CherrySlider_indicator, true)
 
@@ -101,14 +120,20 @@ class CherrySlider @JvmOverloads constructor(context: Context, attrs: AttributeS
 
 
         viewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+            }
 
             override fun onPageSelected(position: Int) {
 //                currentPage = position
                 for (dot in dots ?: arrayListOf()) {
                     dot.setImageDrawable(ContextCompat.getDrawable(context, unselectedDot))
                 }
-                dots?.get(position)?.setImageDrawable(ContextCompat.getDrawable(context, selectedDot))
+                dots?.get(position)
+                    ?.setImageDrawable(ContextCompat.getDrawable(context, selectedDot))
             }
 
             override fun onPageScrollStateChanged(state: Int) {}
@@ -143,6 +168,15 @@ class CherrySlider @JvmOverloads constructor(context: Context, attrs: AttributeS
                 itemClickListener.invoke(position)
             }
         })
+    }
+
+    @StringDef(FIT_CENTER, CENTER_INSIDE, CENTER_CROP)
+    annotation class Scale {
+        companion object {
+            const val FIT_CENTER = "fit_center"
+            const val CENTER_INSIDE = "center_inside"
+            const val CENTER_CROP = "center_crop"
+        }
     }
 
 }

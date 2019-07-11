@@ -1,2 +1,1 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.utkukutlu.library.cherryslider"/>
+<manifest package="com.utkukutlu.library.cherryslider" />
