@@ -2,7 +2,6 @@ package com.utkukutlu.library.cherryslider
 
 import android.content.Context
 import android.os.Handler
-import android.support.annotation.StringDef
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
 import android.util.AttributeSet
@@ -11,9 +10,6 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
-import com.utkukutlu.library.cherryslider.CherrySlider.Scale.Companion.CENTER_CROP
-import com.utkukutlu.library.cherryslider.CherrySlider.Scale.Companion.CENTER_INSIDE
-import com.utkukutlu.library.cherryslider.CherrySlider.Scale.Companion.FIT_CENTER
 import java.util.*
 
 class CherrySlider @JvmOverloads constructor(
@@ -170,13 +166,11 @@ class CherrySlider @JvmOverloads constructor(
         })
     }
 
-    @StringDef(FIT_CENTER, CENTER_INSIDE, CENTER_CROP)
-    annotation class Scale {
-        companion object {
-            const val FIT_CENTER = "fit_center"
-            const val CENTER_INSIDE = "center_inside"
-            const val CENTER_CROP = "center_crop"
-        }
+
+    enum class Scale {
+        FIT_CENTER,
+        CENTER_INSIDE,
+        CENTER_CROP
     }
 
 }

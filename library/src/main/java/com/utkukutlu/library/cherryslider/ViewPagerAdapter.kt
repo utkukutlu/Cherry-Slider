@@ -11,9 +11,6 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.utkukutlu.library.cherryslider.CherrySlider.Scale.Companion.CENTER_CROP
-import com.utkukutlu.library.cherryslider.CherrySlider.Scale.Companion.CENTER_INSIDE
-import com.utkukutlu.library.cherryslider.CherrySlider.Scale.Companion.FIT_CENTER
 
 class ViewPagerAdapter(context: Context?, imageList: List<CherrySliderModel>) : PagerAdapter() {
 
@@ -78,9 +75,9 @@ class ViewPagerAdapter(context: Context?, imageList: List<CherrySliderModel>) : 
 
     private fun getScale(scale: CherrySlider.Scale): RequestOptions {
         return when {
-            scale.toString() == FIT_CENTER -> RequestOptions.fitCenterTransform()
-            scale.toString() == CENTER_CROP -> RequestOptions.centerCropTransform()
-            scale.toString() == CENTER_INSIDE -> RequestOptions.centerInsideTransform()
+            scale == CherrySlider.Scale.FIT_CENTER -> RequestOptions.fitCenterTransform()
+            scale == CherrySlider.Scale.CENTER_CROP -> RequestOptions.centerCropTransform()
+            scale == CherrySlider.Scale.CENTER_INSIDE -> RequestOptions.centerInsideTransform()
             else -> RequestOptions.centerInsideTransform()
         }
     }
