@@ -57,9 +57,10 @@ class ViewPagerAdapter(context: Context?, imageList: List<CherrySliderModel>) : 
             img.into(imageView)
         }
 
+        itemView.setOnClickListener { itemClickListener?.onItemSelected(position) }
+
         container.addView(itemView)
 
-        imageView.setOnClickListener { itemClickListener?.onItemSelected(position) }
 
         return itemView
     }
