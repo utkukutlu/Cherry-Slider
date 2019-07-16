@@ -12,9 +12,9 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
-class ViewPagerAdapter(context: Context?, imageList: List<CherrySliderModel>) : PagerAdapter() {
+class ViewPagerAdapter(context: Context?) : PagerAdapter() {
 
-    private var imageList: List<CherrySliderModel>? = imageList
+    private var imageList: List<CherrySliderModel>? = arrayListOf()
     private var layoutInflater: LayoutInflater? =
         context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater?
 
@@ -72,6 +72,11 @@ class ViewPagerAdapter(context: Context?, imageList: List<CherrySliderModel>) : 
 
     fun setItemClickListener(itemClickListener: ItemClickListener) {
         this.itemClickListener = itemClickListener
+    }
+
+    fun replaceData(items: List<CherrySliderModel>) {
+        imageList = items
+        notifyDataSetChanged()
     }
 
     private fun getScale(scale: CherrySlider.Scale): RequestOptions {

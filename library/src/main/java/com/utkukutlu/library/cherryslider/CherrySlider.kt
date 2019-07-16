@@ -21,7 +21,7 @@ class CherrySlider @JvmOverloads constructor(
 
     private var viewPager: ViewPager? = null
     private var pagerDots: LinearLayout? = null
-    private var viewPagerAdapter: ViewPagerAdapter? = null
+    private var viewPagerAdapter: ViewPagerAdapter? = ViewPagerAdapter(context)
 
 
     private var dots: ArrayList<ImageView>? = null
@@ -79,12 +79,13 @@ class CherrySlider @JvmOverloads constructor(
 
         showIndicator = typedArray.getBoolean(R.styleable.CherrySlider_indicator, true)
 
+        viewPager?.adapter = viewPagerAdapter
+
     }
 
     fun setImages(imageList: List<CherrySliderModel>) {
         slideTimer?.cancel()
-        viewPagerAdapter = ViewPagerAdapter(context, imageList)
-        viewPager?.adapter = viewPagerAdapter
+        viewPagerAdapter?.replaceData(imageList)
         imageCount = imageList.size
         setDots(imageList.size)
         if (autoSlide) {
